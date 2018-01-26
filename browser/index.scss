@@ -1,0 +1,50 @@
+body {
+    background-color: #EEEEEE;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+    
+    .nav {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+
+        &-item {
+            padding: .5em 1em; 
+            text-transform: uppercase;
+            color: #DD2244;
+        }
+    }
+    
+    h1 {
+        font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+        font-size: 2em;
+        font-weight: bold; 
+        font-style: normal; 
+        line-height: 1.2;
+    }
+
+    .home {
+
+        &-content {
+            &-table {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin: 1.5em;
+            }
+        }
+
+        h1 {
+            font-size: 1.5em;
+            font-weight: bold; 
+        }
+        h2 {
+            font-size: 1em;
+        }
+    }
+}
