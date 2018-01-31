@@ -4,14 +4,16 @@ import PropTypes from 'prop-types';
 
 
 const StatsContentCard = (props) => {
-  const { godName, imageUrl, featureStats } = props;
+  const { godName, imageUrl, stat, label } = props;
 
   return (
-    <div>
+    <div className='stat-content-card'>
       <h1>God name: {godName}</h1>
-      <img src={imageUrl} alt="image of god" />
+      <img src={imageUrl} alt="god_image" />
       <div>
-        {Object.keys(featureStats).map(stat => <p>{stat}: {featureStats[stat]}</p>)}
+        <ul>
+          <li>{label}: {stat}</li>
+        </ul>
       </div>
     </div>
   )
@@ -20,7 +22,8 @@ const StatsContentCard = (props) => {
 StatsContentCard.propTypes = {
   imageUrl: PropTypes.string,
   godName: PropTypes.string,
-  featureStats: PropTypes.object
+  label: PropTypes.string,
+  stat: PropTypes.string
 }
 
 export default StatsContentCard;

@@ -113,9 +113,7 @@ class Home extends Component {
                         this.props.stats.map(stat => <p>{stat.name}</p>)
                     }
                 </div> */}
-                <StatsContentCard imageUrl="/something" godName="something" featureStats={{
-                  name: 'somethin'
-                }}/>
+                <StatsContentCard imageUrl="../images/sun_wu_kong.jpeg" godName="Sun Wukong" label="Most Kill" stat="20000" />
             </div>
         );
     }
