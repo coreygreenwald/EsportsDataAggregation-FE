@@ -1,13 +1,26 @@
 import React from 'react';
-import { Aux }from '../../Util';
 import './StatsContentCard.scss';
+import PropTypes from 'prop-types';
 
-console.log(Aux)
 
-const statsContentCard = (props) => (
-  <Aux>
-    <h1>This is stats content card</h1>
-  </Aux>
-)
+const StatsContentCard = (props) => {
+  const { godName, imageUrl, featureStats } = props;
 
-export default statsContentCard;
+  return (
+    <div>
+      <h1>God name: {godName}</h1>
+      <img src={imageUrl} alt="image of god" />
+      <div>
+        {Object.keys(featureStats).map(stat => <p>{stat}: {featureStats[stat]}</p>)}
+      </div>
+    </div>
+  )
+}
+
+StatsContentCard.propTypes = {
+  imageUrl: PropTypes.string,
+  godName: PropTypes.string,
+  featureStats: PropTypes.object
+}
+
+export default StatsContentCard;
