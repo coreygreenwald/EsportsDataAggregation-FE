@@ -8,12 +8,10 @@ const StatsContentCard = (props) => {
 
   return (
     <div className='stat-content-card'>
-      <h1>God name: {godName}</h1>
-      <img src={imageUrl} alt="god_image" />
-      <div>
-        <ul>
-          <li>{label}: {stat}</li>
-        </ul>
+      <div className='stat-content-card-label'>
+        <p className="stat-content-card-label-god-name">{godName}</p>
+        <p>{label}:</p>
+        <p className="stat-content-card-label-most-kill">{stat}</p>
       </div>
     </div>
   )

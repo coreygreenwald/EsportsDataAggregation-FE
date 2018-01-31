@@ -1,3 +1,41 @@
 .stat-content-card {
-  
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  border: solid 10px #335183;
+  transition: border-width 0.6s linear;
+  width: 30%;
+  height: 400px;
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url('http://localhost:5000/images/sun_wu_kong.jpeg');
+  background-size: cover;
+  &-label {
+    width: 100%;
+    font-size: 30px;
+    text-align: center;
+    font-family: 'Passion One', cursive;
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
+    align-self: flex-end;
+    padding-bottom: 5%;
+    &-most-kill {
+      font-size: 3rem;
+    }
+
+    &-god-name {
+      font-size: 4rem;
+    }
+  }
+  &-label > p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.stat-content-card:hover {
+  border-width: 5px;
 }
