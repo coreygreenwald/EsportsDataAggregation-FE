@@ -10,7 +10,7 @@ const StatsContentCard = (props) => {
     <div className="stat-content-card">
       <img src={imageUrl} alt={`${godName}_image`} />
       <div className="stat-content-card-info">
-        <h1>{godName}</h1>
+        <h3>{godName}</h3>
         <p>{label}</p>
         <p>{stat}</p>
       </div>
