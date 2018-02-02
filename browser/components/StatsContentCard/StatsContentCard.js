@@ -7,11 +7,12 @@ const StatsContentCard = (props) => {
   const { godName, imageUrl, stat, label } = props;
 
   return (
-    <div className='stat-content-card'>
-      <div className='stat-content-card-label'>
-        <p className="stat-content-card-label-god-name">{godName}</p>
-        <p>{label}:</p>
-        <p className="stat-content-card-label-most-kill">{stat}</p>
+    <div className="stat-content-card">
+      <img src={imageUrl} alt={`${godName}_image`} />
+      <div className="stat-content-card-info">
+        <h1>{godName}</h1>
+        <p>{label}</p>
+        <p>{stat}</p>
       </div>
     </div>
   )
