@@ -2,7 +2,7 @@ module.exports = {
   entry: './browser/index.js',
   output: {
     path: __dirname,
-    filename: '../EsportsDataV2/public/bundle.js'
+    filename: '../smitedataaggregator/public/bundle.js'
   },
   devtool: 'source-map',
   module: {
@@ -23,4 +23,3 @@ module.exports = {
     ]
   }
 };
-
