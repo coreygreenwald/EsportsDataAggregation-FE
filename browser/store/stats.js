@@ -38,7 +38,7 @@ export const getMostWinsThunk = () =>
     dispatch =>
     axios.get('/api/stats/wins?sorted=true')
     .then(res => {
-        return dispatch(getMostWins({ wins: res.data[0] }))
+        return dispatch(getMostWins(res.data[0]))
     })
     .catch(err => console.log(err));
 
@@ -46,7 +46,7 @@ export const getMostKillsThunk = () =>
     dispatch =>
     axios.get('/api/stats/kills?sorted=true&perGame=true')
     .then(res => {
-        return dispatch(getMostKills({ kills: res.data[0] }))
+        return dispatch(getMostKills(res.data[0]))
     })
     .catch(err => console.log(err));
 
@@ -54,21 +54,21 @@ export const getMostPlaysThunk = () =>
     dispatch =>
     axios.get('/api/stats/games?sorted=true')
     .then(res => {
-        return dispatch(getMostPlays({ plays: res.data[0] }))
+        return dispatch(getMostPlays(res.data[0]))
     })
     .catch(err => console.log(err));
 
 
-export default function(state = {}, action) {
+export default function(state = statsObj, action) {
     switch (action.type) {
         case GET_STATS:
-            return Object.assign(state, { stats: action.stats })
+            return Object.assign({}, state, {stats: action.stats})
         case GET_MOST_WINS:
-            return Object.assign(state, { winner: action.winner })
+            return Object.assign({}, state, {wins: action.winner})
         case GET_MOST_KILLS:
-            return Object.assign(state, { kills: action.kills })
+            return Object.assign({}, state, {kills: action.kills})
         case GET_MOST_PLAYS:
-            return Object.assign(state, { plays: action.plays })
+            return Object.assign({}, state, {plays: action.plays})
         default:
             return state
     }

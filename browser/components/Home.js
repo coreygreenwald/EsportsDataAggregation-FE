@@ -3,7 +3,7 @@ import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import { getStatsThunk } from '../store/index'
-import StatsContentCard from './StatsContentCard/StatsContentCard';
+import StatsContentCard from './StatsContentCard.js';
 
 class Home extends Component {
     constructor(props){
@@ -113,19 +113,16 @@ class Home extends Component {
                     {
                         this.props.stats.length && this.props.stats.map(stat => <p key={stat.name}>{stat.wins}</p>)
                     }
-<<<<<<< HEAD
-=======
                 </div> */}
 
-                {/* 
+                {/*
                     below is just for testing purposes
-                
+
                 */}
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <StatsContentCard imageUrl="../images/sun_wu_kong.jpeg" godName="Sun Wukong" label="Most Kill" stat="20000" />
                     <StatsContentCard imageUrl="../images/sun_wu_kong.jpeg" godName="Sun Wukong" label="Most Kill" stat="20000" />
                     <StatsContentCard imageUrl="../images/sun_wu_kong.jpeg" godName="Sun Wukong" label="Most Kill" stat="20000" />
->>>>>>> master
                 </div>
             </div>
         );

@@ -1,6 +1,8 @@
 import React , { Component } from 'react';
 import {connect} from 'react-redux'
-import { getMostWinsThunk, getMostKillsThunk, getMostPlaysThunk } from '../store/index'
+import { getMostWinsThunk, getMostKillsThunk, getMostPlaysThunk } from '../store/index';
+import StatsContentCard from './StatsContentCard.js';
+import './FeaturedStats.scss'
 
 class FeaturedStats extends Component {
 
@@ -11,8 +13,21 @@ class FeaturedStats extends Component {
   }
 
   render(){
+    const { wins, plays, kills} = this.props.stats;
+    console.log(wins, plays, kills)
     return (
-      <div />
+      <div className="featured-stat">
+        {
+          wins && <StatsContentCard godName={wins.name} label="Most Wins" stat={wins.wins} />
+        }
+        {
+          kills && <StatsContentCard godName={kills.name} label="Most Kills" stat={kills.kills} />
+        }
+        {
+          plays && <StatsContentCard godName={plays.name} label= "Most Game Played" stat={plays.gamesPlayed} />
+        }
+
+      </div>
     )
   }
 }
