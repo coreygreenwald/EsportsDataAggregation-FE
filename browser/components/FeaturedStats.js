@@ -18,13 +18,13 @@ class FeaturedStats extends Component {
     return (
       <div className="featured-stat">
         {
-          wins && <StatsContentCard godName={wins.name} label="Most Wins" stat={wins.wins} />
+          wins && <StatsContentCard imageUrl={wins.picture} godName={wins.name} label="Most Wins" stat={wins.wins} />
         }
         {
-          kills && <StatsContentCard godName={kills.name} label="Most Kills" stat={kills.kills} />
+          kills && <StatsContentCard imageUrl={kills.picture} godName={kills.name} label="Most Kills" stat={kills.kills} />
         }
         {
-          plays && <StatsContentCard godName={plays.name} label= "Most Game Played" stat={plays.gamesPlayed} />
+          plays && <StatsContentCard imageUrl={plays.picture} godName={plays.name} label= "Most Game Played" stat={plays.gamesPlayed} />
         }
 
       </div>
