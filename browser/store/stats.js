@@ -74,7 +74,6 @@ export const getMostPlaysThunk = () =>
                 return axios.get(`/api/gods/${plays.name}`)
             })
             .then(player => {
-                console.log('pic', player.data.GodInfo)
                 plays.picture = player.data.GodInfo.info.godCard_URL
                 return dispatch(getMostPlays(plays))
             })
