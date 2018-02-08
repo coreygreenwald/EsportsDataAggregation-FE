@@ -17,7 +17,6 @@ const Main = (props) => {
       <nav className="nav">
         <div className="nav-item"><Link to="/">SmiteMaster</Link></div>
         <div className="nav-item"><Link to="/">Home</Link></div>
-        <div className="nav-item"><Link to="/featuredstats">FeaturedStats</Link></div>
       </nav>
       {children}
     </div>

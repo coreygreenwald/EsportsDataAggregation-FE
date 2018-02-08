@@ -1,47 +1,47 @@
 {
-    "name": "EsportsDataAggregation-FE",
-    "version": "1.0.0",
-    "description": "",
-    "main": "webpack.config.js",
-    "scripts": {
-        "start": "webpack -w",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/coreygreenwald/EsportsDataAggregation-FE.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/coreygreenwald/EsportsDataAggregation-FE/issues"
-    },
-    "homepage": "https://github.com/coreygreenwald/EsportsDataAggregation-FE#readme",
-    "dependencies": {
-        "axios": "^0.16.2",
-        "prop-types": "^15.6.0",
-        "react": "^15.6.1",
-        "react-dom": "^15.6.1",
-        "react-redux": "^5.0.6",
-        "react-router": "^4.1.2",
-        "react-router-dom": "^4.1.2",
-        "redux": "^3.7.2",
-        "redux-thunk": "^2.2.0",
-        "webpack": "^3.4.1"
-    },
-    "devDependencies": {
-        "babel-core": "^6.22.1",
-        "babel-loader": "^6.2.10",
-        "babel-preset-es2015": "^6.22.0",
-        "babel-preset-react": "^6.22.0",
-        "babel-preset-stage-0": "^6.24.1",
-        "babel-register": "^6.24.1",
-        "css-loader": "^0.26.1",
-        "node-sass": "^4.5.0",
-        "redux-devtools-extension": "^2.13.2",
-        "redux-logger": "^3.0.6",
-        "sass-loader": "^6.0.0",
-        "style-loader": "^0.13.1"
-    }
+  "name": "EsportsDataAggregation-FE",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "start": "webpack -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coreygreenwald/EsportsDataAggregation-FE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coreygreenwald/EsportsDataAggregation-FE/issues"
+  },
+  "homepage": "https://github.com/coreygreenwald/EsportsDataAggregation-FE#readme",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "prop-types": "^15.6.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.1.2",
+    "react-router-dom": "^4.1.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "webpack": "^3.4.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "css-loader": "^0.26.1",
+    "node-sass": "^4.5.0",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-logger": "^3.0.6",
+    "sass-loader": "^6.0.0",
+    "style-loader": "^0.13.1"
+  }
 }
