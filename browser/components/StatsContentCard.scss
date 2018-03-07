@@ -1,26 +1,48 @@
 .stat-content-card {
   position: relative;
+  margin: 1em;
   font-family: 'Shrikhand', cursive;
   font-family: 'Bangers', cursive;
   font-family: 'Shojumaru', cursive;
-  width: 30%; // will be taken out when the parent component is ready
-  height: 400px;  // will be taken out when the parent component is ready
-  & > img {
+  width: 18em;
+  height: auto;  // will be taken out when the parent component is ready
+  max-height: 23em;
+  border: 10px solid #222222;
+
+  img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 23em;
+    :after {
+      background-color: rgba(248, 247, 216, 0.7);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &-info {
     position: absolute;
-    left: 0;
     top: 50%;
+    text-align: center;
     width: 100%;
     color: #FFF;
-  }
-  
-  &-info p + p {
-    font-size: 3em;
-    margin: 0;
+      @media screen and (min-width: 800px) {
+        font-size: .7em;
+        top: 30%;
+      }
+      @media screen and (min-width: 1200px) {
+        font-size: .7em;
+        top: 40%;
+      }
+      @media screen and (min-width: 1600px) {
+        font-size: 1em;
+      }
+
+      font-size: .9em;
+      margin: 0;
   }
 }
 

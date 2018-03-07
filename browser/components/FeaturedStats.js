@@ -16,27 +16,27 @@ class FeaturedStats extends Component {
   const { wins, plays, kills} = this.props.stats;
   return (
     <div className="featured-stat">
-    {
-      wins && <StatsContentCard
-          imageUrl={wins.picture}
-          godName={wins.name}
-          label="Most Wins"
-          stat={wins.wins} />
-    }
-    {
-      kills && <StatsContentCard
-            imageUrl={kills.picture}
-            godName={kills.name}
-            label="Most Kills"
-            stat={kills.kills} />
-    }
-    {
-      plays && <StatsContentCard
-            imageUrl={plays.picture}
-            godName={plays.name}
-            label= "Most Game Played"
-            stat={plays.gamesPlayed} />
-    }
+      {
+        wins && <StatsContentCard
+            imageUrl={wins.picture}
+            godName={wins.name}
+            label="Most Wins"
+            stat={wins.wins} />
+      }
+      {
+        kills && <StatsContentCard
+              imageUrl={kills.picture}
+              godName={kills.name}
+              label="Most Kills"
+              stat={kills.kills} />
+      }
+      {
+        plays && <StatsContentCard
+              imageUrl={plays.picture}
+              godName={plays.name}
+              label= "Most Game Played"
+              stat={plays.gamesPlayed} />
+      }
 
     </div>
   )
