@@ -59,7 +59,7 @@ class StatChart extends Component {
           <XAxis dataKey="name" >
             <Label value="God Name" offset={-10} position="insideBottom" />
           </XAxis>
-          <YAxis dataKey="value" label={{ value: labelMaker(this.props.stats.statName), angle: -90, position: 'left'}}/>
+          <YAxis dataKey="value" label={{ value: labelMaker(`${this.props.stats.statName} for ${this.state.systemTarget} ${this.state.breakdown}`), angle: -90, position: 'insideBottomLeft'}}/>
           <Tooltip />
           <Bar dataKey="value" label="hi" fill="#8884d8" />
         </BarChart>
@@ -68,7 +68,7 @@ class StatChart extends Component {
             <label htmlFor="stat-selector">Select a Stat</label>
             <select name="stat-selector" onChange={(event) => this.setStat(event.target.value)}>
                 {
-                  this.props.stats.stats.map(stat => (<option>{stat}</option>))
+                  this.props.stats.stats.map(stat => (<option value={stat} key={stat}>{labelMaker(stat)}</option>))
                 }
             </select>
           </div>
