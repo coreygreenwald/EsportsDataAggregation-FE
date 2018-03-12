@@ -39,9 +39,6 @@ const mapDispatch = (dispatch) => {
   return {
     getStats() {
       dispatch(getStatsThunk())
-    },
-    getStatsDataThunk(stat) {
-      dispatch(getStatsDataThunk(stat))
     }
   }
 }
