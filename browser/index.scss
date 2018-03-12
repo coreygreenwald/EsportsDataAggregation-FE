@@ -53,5 +53,19 @@ body {
         @media screen and (min-width: 600px) {
             width: 100%;
         }
+
+        &-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+
+            .stat-controller {
+                display: flex;
+                flex-direction: column;
+                select {
+                    height: 30px;
+                }
+            }
+        }
     }
 }

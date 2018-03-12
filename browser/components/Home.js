@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { getStatsThunk } from '../store/index';
+
 import FeaturedStats from './FeaturedStats.js';
+import StatChart from './StatChart';
 
 class Home extends Component {
   constructor(props){
@@ -17,9 +19,11 @@ class Home extends Component {
   }
 
   render(){
+    // console.log('STATS', this.props.stats.statData);
     return (
       <div className="container">
-        <FeaturedStats />
+        {/* <FeaturedStats /> */}
+        <StatChart />
       </div>
     );
   }
@@ -29,14 +33,17 @@ const mapState = (state) => {
   return {
     stats: state.stats
   }
-  }
+}
 
-  const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch) => {
   return {
     getStats() {
-    dispatch(getStatsThunk())
+      dispatch(getStatsThunk())
+    },
+    getStatsDataThunk(stat) {
+      dispatch(getStatsDataThunk(stat))
     }
   }
-  }
+}
 
 export default withRouter(connect(mapState, mapDispatch)(Home))
