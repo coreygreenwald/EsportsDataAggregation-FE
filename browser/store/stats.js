@@ -94,7 +94,7 @@ export const getStatsDataThunk = (queryObj) =>
     return axios.get(`/api/stats/${queryObj.statName}?sorted=true&${finalQuery}`)
       .then(statData => {
         /* REMOVE LOGIC WHEN ROUTE FIXED */
-        let data = statData.data.slice(2,12).map(obj => ({name: obj.name, value: obj[queryObj.statName]}));
+        let data = statData.data.slice(0,10).map(obj => ({name: obj.name, value: obj[queryObj.statName]}));
         return dispatch(getStatData(data, queryObj.statName));
       })
       .catch(err => console.log(err));

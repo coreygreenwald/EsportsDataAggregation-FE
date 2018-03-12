@@ -11,9 +11,9 @@ class StatChart extends Component {
   constructor(props){
     super(props);
     this.state = {
-      statName: 'timesBanned',
+      statName: 'kills',
       systemTarget: 'all',
-      breakdown: 'Total'
+      breakdown: 'Per Game'
     }
     this.grabStat = this.grabStat.bind(this);
     this.setStat = this.setStat.bind(this);
@@ -75,17 +75,17 @@ class StatChart extends Component {
           <div className="stat-controller-system-selector">
             <label htmlFor="stat-selector">Select a System</label>
             <select name="stat-selector" onChange={(event) => this.setSystem(event.target.value)}>
-              <option selected>All</option>
-              <option>PC</option>
-              <option>Xbox</option>
-              <option>PS4</option>
+              <option value="all" selected>All Systems</option>
+              <option value="pc">PC</option>
+              <option value="xbox">Xbox</option>
+              <option value="ps4">PS4</option>
             </select>
           </div>
           <div className="stat-controller-system-selector">
             <label htmlFor="stat-selector">Select Breakdown</label>
             <select name="stat-selector" onChange={(event) => this.setBreakdown(event.target.value)}>
-              <option selected>Total</option>
-              <option>Per Game</option>
+              <option>Total</option>
+              <option selected>Per Game</option>
             </select>
           </div>
         </div>
