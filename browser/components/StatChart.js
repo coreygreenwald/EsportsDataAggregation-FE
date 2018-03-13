@@ -46,7 +46,6 @@ class StatChart extends Component {
     axios.get(`/api/stats/${queryObj.statName}?sorted=true&${finalQuery}`)
       .then(res => res.data)
       .then(data => {
-        console.log(data);
         data = queryObj.order === 'DESC' ? data.slice(0,10) : data.slice(-10).reverse();
         data = data.map(obj => ({name: obj.name, value: obj[queryObj.statName]}));
         if(!data.length){
@@ -71,7 +70,6 @@ class StatChart extends Component {
   }
 
   setBreakdown(breakdown){
-    // this.setState({breakdown: breakdown});
     let queryObj = Object.assign({}, this.state, {breakdown});
     this.grabStat(queryObj)
   }
@@ -141,18 +139,4 @@ class StatChart extends Component {
   }
 }
 
-const mapState = (state) => {
-  return {
-    stats: state.stats
-  }
-}
-
-const mapDispatch = (dispatch) => {
-  return {
-    getStatsDataThunk(stat) {
-      dispatch(getStatsDataThunk(stat))
-    }
-  }
-}
-
-export default withRouter(connect(mapState, mapDispatch)(StatChart))
+export default withRouter(StatChart)
