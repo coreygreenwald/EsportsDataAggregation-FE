@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import { getStatsDataThunk } from '../store/index';
 import axios from 'axios';
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, Label } from 'recharts';
-import { statNames } from '../utils/stats';
+import { statNames, patchDates } from '../utils/stats';
 
 function randomColor(){
   const letters = '0123456789ABCDEF';
@@ -24,6 +24,7 @@ class StatChart extends Component {
       systemTarget: 'all',
       breakdown: 'Per Game',
       chartColor: randomColor(),
+      patch: 'all',
       order: 'DESC',
       data: []
     }
@@ -42,7 +43,8 @@ class StatChart extends Component {
     let wins = {};
     let querySystem = queryObj.systemTarget && queryObj.systemTarget !== 'all' ? `system=${queryObj.systemTarget}` : '';
     let queryBreakdown = queryObj.breakdown && queryObj.breakdown === 'Per Game' ? `perGame=true` : '';
-    let finalQuery = [querySystem, queryBreakdown].filter(query => query.length).join('&');
+    let queryPatch = queryObj.patch !== 'all' ? `startDate=${patchDates[queryObj.patch].start}&endDate=${patchDates[queryObj.patch].stop}` : '';
+    let finalQuery = [querySystem, queryBreakdown, queryPatch].filter(query => query.length).join('&');
     axios.get(`/api/stats/${queryObj.statName}?sorted=true&${finalQuery}`)
       .then(res => res.data)
       .then(data => {
@@ -76,6 +78,11 @@ class StatChart extends Component {
 
   setOrder(order){
     let queryObj = Object.assign({}, this.state, {order});
+    this.grabStat(queryObj)
+  }
+
+  setPatch(patch){
+    let queryObj = Object.assign({}, this.state, {patch});
     this.grabStat(queryObj)
   }
 
@@ -126,6 +133,22 @@ class StatChart extends Component {
             <select name="order-selector" onChange={(event) => this.setOrder(event.target.value)}>
               <option value="DESC" selected>Descending</option>
               <option value="ASC">Ascending</option>
+            </select>
+          </div>
+          {/* <div className="stat-controller-start-date-selector">
+          <label htmlFor="date-selector">St</label>
+            <input id="date" type="date" onChange={(event) => this.setStartDate(event.target.value)}/>
+          </div>
+          <div className="stat-controller-stop-date-selector">
+            <input id="date" type="date"onChange={(event) => this.setEndDate(event.target.value)}/>
+          </div> */}
+          <div className="stat-controller-patch-selector">
+           <label htmlFor="patch-selector">Select Patch Number</label>
+            <select name="patch-selector" onChange={(event) => this.setPatch(event.target.value)}>
+              <option value="all" selected>All</option>
+              <option value="5.1">5.1</option>
+              <option value="5.2">5.2</option>
+              <option value="5.3">5.3</option>
             </select>
           </div>
         </div>
