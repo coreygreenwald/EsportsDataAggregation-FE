@@ -10,20 +10,29 @@ class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
-      kda: {}
+      statBoxes: [<StatChart/>]
     }
+    this.addStatChart = this.addStatChart.bind(this);
   }
 
   componentDidMount(){
     this.props.getStats();
   }
 
+  addStatChart(){
+    const newStatBoxes = this.state.statBoxes.slice();
+    newStatBoxes.push(<StatChart />);
+    this.setState({statBoxes: newStatBoxes});
+  }
+
   render(){
-    // console.log('STATS', this.props.stats.statData);
     return (
       <div className="container">
         {/* <FeaturedStats /> */}
-        <StatChart />
+        {/* <StatChart /> */}
+        {this.state.statBoxes}
+        <br/>
+        <button onClick={this.addStatChart}> ADD ANOTHER CHART </button>
       </div>
     );
   }

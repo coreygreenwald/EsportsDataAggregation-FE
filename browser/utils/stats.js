@@ -1,0 +1,18 @@
+export const statNames = [
+  'timesBanned',
+  'wins',
+  'losses',
+  'kda',
+  'kills',
+  'deaths',
+  'assists',
+  'damage',
+  'timesSurrendered',
+  'goldEarned',
+  'goldPerMinute',
+  'finalLevel',
+  'structureDamage',
+  'campsCleared',
+  'wardsPlaced',
+  'towersDestroyed',
+]

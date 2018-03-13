@@ -14,10 +14,11 @@ const Main = (props) => {
   const {children} = props
   return (
     <div className="main">
-      <nav className="nav">
+      <h1> Welcome to SmiteMaster! </h1>
+      {/* <nav className="nav">
         <div className="nav-item"><Link to="/">SmiteMaster</Link></div>
         <div className="nav-item"><Link to="/">Home</Link></div>
-      </nav>
+      </nav> */}
       {children}
     </div>
   )
