@@ -50,14 +50,15 @@ body {
 
     .container {
         margin: auto;
-        @media screen and (min-width: 600px) {
-            width: 100%;
-        }
+        // @media screen and (min-width: 600px) {
+        //     width: 100%;
+        // }
 
         &-row {
             width: 100%;
             display: flex;
             align-items: center;
+            margin: auto;
 
             .stat-controller {
                 display: flex;

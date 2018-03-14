@@ -24,15 +24,19 @@ class StatChart extends Component {
       systemTarget: 'all',
       breakdown: 'Per Game',
       chartColor: randomColor(),
+      quantity: 10,
       patch: 'all',
       order: 'DESC',
       data: []
     }
     this.grabStat = this.grabStat.bind(this);
-    this.setStat = this.setStat.bind(this);
+    // this.setStat = this.setStat.bind(this);
     this.setSystem = this.setSystem.bind(this);
-    this.setBreakdown = this.setBreakdown.bind(this);
-    this.setOrder = this.setOrder.bind(this);
+    this.setAttribute = this.setAttribute.bind(this);
+    // this.setBreakdown = this.setBreakdown.bind(this);
+    // this.setOrder = this.setOrder.bind(this);
+    // this.setPatch = this.setPatch.bind(this);
+    // this.setQuantity = this.setQuantity.bind(this);
   }
 
   componentDidMount(){
@@ -48,7 +52,9 @@ class StatChart extends Component {
     axios.get(`/api/stats/${queryObj.statName}?sorted=true&${finalQuery}`)
       .then(res => res.data)
       .then(data => {
-        data = queryObj.order === 'DESC' ? data.slice(0,10) : data.slice(-10).reverse();
+        let len = queryObj.quantity === 'all' ? data.length : Number(queryObj.quantity);
+        console.log('LEN', len);
+        data = queryObj.order === 'DESC' ? data.slice(0,len) : data.slice(-len).reverse();
         data = data.map(obj => ({name: obj.name, value: obj[queryObj.statName]}));
         if(!data.length){
           data = [{name: 'T', value: 1},{name: 'R', value: 1},{name: 'Y', value: 1},{name: ' ', value: 1},{name: 'A', value: 1}, {name: 'G', value: 1}, {name: 'A', value: 1}, {name: 'I', value: 1}, {name: 'N', value: 1}];
@@ -61,28 +67,13 @@ class StatChart extends Component {
     // this.setState(data);
   }
 
-  setStat(statName){
-    let queryObj = Object.assign({}, this.state, {statName});
+  setAttribute(attributeName, value){
+    let queryObj = Object.assign({}, this.state, {[attributeName]: value});
     this.grabStat(queryObj)
   }
 
   setSystem(systemTarget){
     let queryObj = Object.assign({}, this.state, {systemTarget: systemTarget.toLowerCase()});
-    this.grabStat(queryObj)
-  }
-
-  setBreakdown(breakdown){
-    let queryObj = Object.assign({}, this.state, {breakdown});
-    this.grabStat(queryObj)
-  }
-
-  setOrder(order){
-    let queryObj = Object.assign({}, this.state, {order});
-    this.grabStat(queryObj)
-  }
-
-  setPatch(patch){
-    let queryObj = Object.assign({}, this.state, {patch});
     this.grabStat(queryObj)
   }
 
@@ -106,7 +97,7 @@ class StatChart extends Component {
         <div className="stat-controller">
           <div className="stat-controller-selector">
             <label htmlFor="stat-selector">Select a Stat</label>
-            <select value={this.state.statName} name="stat-selector" onChange={(event) => this.setStat(event.target.value)}>
+            <select value={this.state.statName} name="stat-selector" onChange={(event) => this.setAttribute('statName', event.target.value)}>
                 {
                   statNames.map(stat => (<option value={stat} key={stat}>{labelMaker(stat)}</option>))
                 }
@@ -123,32 +114,34 @@ class StatChart extends Component {
           </div>
           <div className="stat-controller-system-selector">
             <label htmlFor="system-selector">Select Breakdown</label>
-            <select name="system-selector" onChange={(event) => this.setBreakdown(event.target.value)}>
+            <select name="system-selector" onChange={(event) => this.setAttribute('breakdown', event.target.value)}>
               <option>Total</option>
               <option selected>Per Game</option>
             </select>
           </div>
           <div className="stat-controller-order-selector">
             <label htmlFor="order-selector">Sort Direction</label>
-            <select name="order-selector" onChange={(event) => this.setOrder(event.target.value)}>
-              <option value="DESC" selected>Descending</option>
-              <option value="ASC">Ascending</option>
+            <select name="order-selector" onChange={(event) => this.setAttribute('order', event.target.value)}>
+              <option value="DESC" selected>Descending (top -> bottom)</option>
+              <option value="ASC">Ascending (bottom -> top)</option>
             </select>
           </div>
-          {/* <div className="stat-controller-start-date-selector">
-          <label htmlFor="date-selector">St</label>
-            <input id="date" type="date" onChange={(event) => this.setStartDate(event.target.value)}/>
-          </div>
-          <div className="stat-controller-stop-date-selector">
-            <input id="date" type="date"onChange={(event) => this.setEndDate(event.target.value)}/>
-          </div> */}
           <div className="stat-controller-patch-selector">
            <label htmlFor="patch-selector">Select Patch Number</label>
-            <select name="patch-selector" onChange={(event) => this.setPatch(event.target.value)}>
+            <select name="patch-selector" onChange={(event) => this.setAttribute('patch', event.target.value)}>
               <option value="all" selected>All</option>
               <option value="5.1">5.1</option>
               <option value="5.2">5.2</option>
               <option value="5.3">5.3</option>
+            </select>
+          </div>
+          <div className="stat-controller-quantity-selector">
+           <label htmlFor="quantity-selector">Quantity of Gods on Graph</label>
+            <select name="quantity-selector" onChange={(event) => this.setAttribute('quantity', event.target.value)}>
+              <option value="10" selected>10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="all">All</option>
             </select>
           </div>
         </div>
