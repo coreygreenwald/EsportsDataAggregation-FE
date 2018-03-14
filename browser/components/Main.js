@@ -14,7 +14,9 @@ const Main = (props) => {
   const {children} = props
   return (
     <div className="main">
-      <h1> Welcome to SmiteMaster! </h1>
+      <div className="header">
+        <h1> Welcome to SmiteMaster! </h1>
+      </div>
       {/* <nav className="nav">
         <div className="nav-item"><Link to="/">SmiteMaster</Link></div>
         <div className="nav-item"><Link to="/">Home</Link></div>

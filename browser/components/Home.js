@@ -32,7 +32,7 @@ class Home extends Component {
         {/* <StatChart /> */}
         {this.state.statBoxes}
         <br/>
-        <button onClick={this.addStatChart}> ADD ANOTHER CHART </button>
+        <button className="btn" onClick={this.addStatChart}> ADD ANOTHER CHART </button>
       </div>
     );
   }
