@@ -30,13 +30,8 @@ class StatChart extends Component {
       data: []
     }
     this.grabStat = this.grabStat.bind(this);
-    // this.setStat = this.setStat.bind(this);
     this.setSystem = this.setSystem.bind(this);
     this.setAttribute = this.setAttribute.bind(this);
-    // this.setBreakdown = this.setBreakdown.bind(this);
-    // this.setOrder = this.setOrder.bind(this);
-    // this.setPatch = this.setPatch.bind(this);
-    // this.setQuantity = this.setQuantity.bind(this);
   }
 
   componentDidMount(){
@@ -103,7 +98,7 @@ class StatChart extends Component {
                 }
             </select>
           </div>
-          <div className="stat-controller-system-selector">
+          <div className="stat-controller-selector">
             <label htmlFor="stat-selector">Select a System</label>
             <select name="stat-selector" onChange={(event) => this.setSystem(event.target.value)}>
               <option value="all" selected>All Systems</option>
@@ -112,21 +107,21 @@ class StatChart extends Component {
               <option value="ps4">PS4</option>
             </select>
           </div>
-          <div className="stat-controller-system-selector">
+          <div className="stat-controller-selector">
             <label htmlFor="system-selector">Select Breakdown</label>
             <select name="system-selector" onChange={(event) => this.setAttribute('breakdown', event.target.value)}>
               <option>Total</option>
               <option selected>Per Game</option>
             </select>
           </div>
-          <div className="stat-controller-order-selector">
+          <div className="stat-controller-selector">
             <label htmlFor="order-selector">Sort Direction</label>
             <select name="order-selector" onChange={(event) => this.setAttribute('order', event.target.value)}>
               <option value="DESC" selected>Descending (top -> bottom)</option>
               <option value="ASC">Ascending (bottom -> top)</option>
             </select>
           </div>
-          <div className="stat-controller-patch-selector">
+          <div className="stat-controller-selector">
            <label htmlFor="patch-selector">Select Patch Number</label>
             <select name="patch-selector" onChange={(event) => this.setAttribute('patch', event.target.value)}>
               <option value="all" selected>All</option>
@@ -135,7 +130,7 @@ class StatChart extends Component {
               <option value="5.3">5.3</option>
             </select>
           </div>
-          <div className="stat-controller-quantity-selector">
+          <div className="stat-controller-selector">
            <label htmlFor="quantity-selector">Quantity of Gods on Graph</label>
             <select name="quantity-selector" onChange={(event) => this.setAttribute('quantity', event.target.value)}>
               <option value="10" selected>10</option>

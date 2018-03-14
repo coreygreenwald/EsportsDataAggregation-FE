@@ -7,7 +7,7 @@ import FeaturedStats from './FeaturedStats.js';
 import StatChart from './StatChart';
 import GodChart from './GraphComponents/GodChart';
 
-class Home extends Component {
+class StatChartHolder extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -29,12 +29,9 @@ class Home extends Component {
   render(){
     return (
       <div className="container">
-        {/* <FeaturedStats /> */}
-        {/* <StatChart /> */}
         {this.state.statBoxes}
         <br/>
         <button className="btn" onClick={this.addStatChart}> ADD ANOTHER CHART </button>
-        <GodChart />
       </div>
     );
   }
@@ -54,4 +51,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default withRouter(connect(mapState, mapDispatch)(Home))
+export default withRouter(connect(mapState, mapDispatch)(StatChartHolder))

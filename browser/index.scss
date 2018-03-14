@@ -20,13 +20,22 @@ body {
 
     .nav {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         flex-direction: row;
+        height: 40px;
+        background-color: #aaaaaa;
 
         &-item {
             padding: .5em 1em;
             text-transform: uppercase;
-            color: #DD2244;
+            a {
+                color: #111111;
+
+                &:hover {
+                    color: #ffffff;
+                }
+            }
+
         }
     }
 
@@ -76,6 +85,12 @@ body {
                 flex-direction: column;
                 select {
                     height: 30px;
+                }
+
+                &-selector {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
                 }
             }
         }

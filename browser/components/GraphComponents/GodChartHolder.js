@@ -1,40 +1,36 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import { getStatsThunk } from '../store/index';
+import { getStatsThunk } from '../../store/index';
 
-import FeaturedStats from './FeaturedStats.js';
-import StatChart from './StatChart';
-import GodChart from './GraphComponents/GodChart';
+import FeaturedStats from '../FeaturedStats.js';
+import GodChart from './GodChart';
 
-class Home extends Component {
+class GodChartHolder extends Component {
   constructor(props){
     super(props);
     this.state = {
-      statBoxes: [<StatChart/>]
+      statBoxes: [<GodChart/>]
     }
-    this.addStatChart = this.addStatChart.bind(this);
+    this.addGodChart = this.addGodChart.bind(this);
   }
 
   componentDidMount(){
     this.props.getStats();
   }
 
-  addStatChart(){
+  addGodChart(){
     const newStatBoxes = this.state.statBoxes.slice();
-    newStatBoxes.push(<StatChart />);
+    newStatBoxes.push(<GodChart/>);
     this.setState({statBoxes: newStatBoxes});
   }
 
   render(){
     return (
       <div className="container">
-        {/* <FeaturedStats /> */}
-        {/* <StatChart /> */}
         {this.state.statBoxes}
         <br/>
-        <button className="btn" onClick={this.addStatChart}> ADD ANOTHER CHART </button>
-        <GodChart />
+        <button className="btn" onClick={this.addGodChart}> ADD ANOTHER CHART </button>
       </div>
     );
   }
@@ -54,4 +50,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default withRouter(connect(mapState, mapDispatch)(Home))
+export default withRouter(connect(mapState, mapDispatch)(GodChartHolder))
