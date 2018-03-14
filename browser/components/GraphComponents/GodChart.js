@@ -44,6 +44,7 @@ class GodChart extends Component {
     Promise.all([axios.get('/api/stats/all?perGame=true').then(res => res.data), this.grabGodData(godName || this.state.godName).then(res => res.data)])
     .then(data => {
       delete data[1].stats[0].name;
+      delete data[1].stats[0].totalTime;
       this.convertAndSetData(data[1].stats[0], data[0]);
     })
   }
@@ -69,7 +70,7 @@ class GodChart extends Component {
       this.state.stats.length && this.props.gods.godNames ? (
 
         <div className="container-row">
-          <RadarChart outerRadius={200} width={800} height={600} data={this.state.stats}>
+          <RadarChart outerRadius={200} width={800} height={520} data={this.state.stats}>
             <PolarGrid />
             <PolarAngleAxis dataKey="statName" />
             <PolarRadiusAxis angle={30} domain={[0, 100]}/>
@@ -77,6 +78,7 @@ class GodChart extends Component {
             {/* <Legend /> */}
           </RadarChart>
           <div className="stat-controller">
+            <h4> All stats are shown as a percentage of the highest God in each category.</h4>
             <div className="stat-controller-god-selector">
               <label htmlFor="god-selector">Select a God</label>
               <select value={this.state.godName} name="god-selector" onChange={(event) => this.changeGod(event.target.value)}>
@@ -84,6 +86,14 @@ class GodChart extends Component {
                   this.props.gods.godNames.map(god => (<option value={god} key={god}>{labelMaker(god)}</option>))
                 }
               </select>
+            </div>
+            <div className="stat-controller-god-text">
+                <h4>{this.state.godName} excels in the following categories:</h4>
+                {
+                   this.state.stats
+                    .filter(stat => stat.a > 85)
+                    .map(stat => <p>{stat.statName} at the {stat.a} percentile</p>)
+                }
             </div>
           </div>
       </div>

@@ -4,16 +4,19 @@ import {connect} from 'react-redux';
 import { getStatsThunk } from '../store/index';
 
 import FeaturedStats from './FeaturedStats.js';
-import StatChart from './StatChart';
-import GodChart from './GraphComponents/GodChart';
+import StatChartHolder from './StatChartHolder';
+import GodChartHolder from './GraphComponents/GodChartHolder';
 
 class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
-      statBoxes: [<StatChart/>]
+
     }
-    this.addStatChart = this.addStatChart.bind(this);
+    // this.state = {
+    //   statBoxes: [<StatChart/>]
+    // }
+    // this.addStatChart = this.addStatChart.bind(this);
   }
 
   componentDidMount(){
@@ -29,12 +32,8 @@ class Home extends Component {
   render(){
     return (
       <div className="container">
-        {/* <FeaturedStats /> */}
-        {/* <StatChart /> */}
-        {this.state.statBoxes}
-        <br/>
-        <button className="btn" onClick={this.addStatChart}> ADD ANOTHER CHART </button>
-        <GodChart />
+        <StatChartHolder />
+        <GodChartHolder />
       </div>
     );
   }

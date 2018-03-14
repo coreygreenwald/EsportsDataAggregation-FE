@@ -31,7 +31,7 @@ class StatChartHolder extends Component {
       <div className="container">
         {this.state.statBoxes}
         <br/>
-        <button className="btn" onClick={this.addStatChart}> ADD ANOTHER CHART </button>
+        <button className="btn" onClick={this.addStatChart}> ADD ANOTHER STATS BAR CHART </button>
       </div>
     );
   }

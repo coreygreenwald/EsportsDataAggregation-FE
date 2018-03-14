@@ -30,7 +30,7 @@ class GodChartHolder extends Component {
       <div className="container">
         {this.state.statBoxes}
         <br/>
-        <button className="btn" onClick={this.addGodChart}> ADD ANOTHER CHART </button>
+        <button className="btn" onClick={this.addGodChart}> ADD ANOTHER RADIAL GOD CHART </button>
       </div>
     );
   }
