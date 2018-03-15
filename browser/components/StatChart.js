@@ -48,7 +48,6 @@ class StatChart extends Component {
       .then(res => res.data)
       .then(data => {
         let len = queryObj.quantity === 'all' ? data.length : Number(queryObj.quantity);
-        console.log('LEN', len);
         data = queryObj.order === 'DESC' ? data.slice(0,len) : data.slice(-len).reverse();
         data = data.map(obj => ({name: obj.name, value: obj[queryObj.statName]}));
         if(!data.length){

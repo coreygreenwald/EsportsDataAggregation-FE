@@ -71,7 +71,6 @@ class GodChart extends Component {
   }
 
   convertAndSetData(godData, averagedStats){
-    console.log('godData', godData)
     let convertedData = [];
     for(let stat in godData){
       if(this.state.activeStats[stat]){
