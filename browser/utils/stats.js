@@ -10,7 +10,6 @@ export const statNames = [
   'timesSurrendered',
   'goldEarned',
   'goldPerMinute',
-  'finalLevel',
   'structureDamage',
   'campsCleared',
   'wardsPlaced',

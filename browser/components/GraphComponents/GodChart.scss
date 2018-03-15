@@ -1,0 +1,17 @@
+.stat-controller {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &-stats-checkboxes {
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  .btn-toggle {
+    width: 30%;
+    font-size: 16px;
+    padding: 5px;
+    margin: 10px auto;
+  }
+}

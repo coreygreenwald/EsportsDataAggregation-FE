@@ -5,7 +5,8 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend } from 'recharts';
 import { getGodsThunk } from '../../store';
-// import { statNames, patchDates } from '../utils/stats';
+import { statNames, patchDates } from '../../utils/stats';
+import './GodChart.scss';
 
 function percentage(n1, n2){
   return Number(((n1 / n2) * 100).toFixed(2));
@@ -15,6 +16,19 @@ function labelMaker(label = ''){
   return label.replace(/[A-Z]/g, (letter) => ` ${letter}`).toUpperCase();
 }
 
+function initActiveStats(statBase, statsToRemove, statsToStart){
+  let initialStats = statNames.reduce((obj, next) => {
+    if(!statsToRemove.includes(next)){
+      obj[next] = false;
+    }
+    return obj;
+  }, {});
+  statsToStart.forEach(stat => {
+    initialStats[stat] = true;
+  })
+  return initialStats;
+}
+
 class GodChart extends Component {
 
   constructor(props){
@@ -22,11 +36,14 @@ class GodChart extends Component {
     this.state = {
       godName: 'Freya',
       stats: [],
-      averageStats: {}
+      averageStats: {},
+      showStats: false,
+      activeStats: initActiveStats(statNames, ['kda'], ['kills', 'assists', 'deaths', 'wins', 'goldEarned', 'damage', 'wardsPlaced'])
     }
     this.grabGodData = this.grabGodData.bind(this);
     this.changeGod = this.changeGod.bind(this);
     this.convertAndSetData = this.convertAndSetData.bind(this);
+    this.toggleCheckbox = this.toggleCheckbox.bind(this);
   }
 
   componentDidMount(){
@@ -54,18 +71,27 @@ class GodChart extends Component {
   }
 
   convertAndSetData(godData, averagedStats){
+    console.log('godData', godData)
     let convertedData = [];
     for(let stat in godData){
-      convertedData.push({statName: labelMaker(stat), a: percentage(godData[stat], averagedStats[stat])});
+      if(this.state.activeStats[stat]){
+        convertedData.push({statName: labelMaker(stat), a: percentage(godData[stat], averagedStats[stat])});
+      }
     }
     this.setState({stats: convertedData});
+  }
+
+  toggleCheckbox(event){
+    let newActiveStats = Object.assign({}, this.state.activeStats);
+    newActiveStats[event.target.value] = !newActiveStats[event.target.value];
+    this.setState({activeStats: newActiveStats});
+    this.updateGraph();
   }
 
   render(){
     function labelMaker(label = ''){
       return label.replace(/[A-Z]/g, (letter) => ` ${letter}`).toUpperCase();
     }
-    console.log(this.props.gods)
     return (
       this.state.stats.length && this.props.gods.godNames ? (
 
@@ -87,6 +113,24 @@ class GodChart extends Component {
                 }
               </select>
             </div>
+            <button className="btn btn-toggle" onClick={() => this.setState({showStats: !this.state.showStats}).bind(this)}>{this.state.showStats ? 'Collapse' : 'Expand'} Stats</button>
+            {
+              this.state.showStats &&
+              (
+                <div className="stat-controller-stats-checkboxes">
+                  {
+                    statNames.map((statName, idx) => {
+                      return (
+                        <div className={"stat-checkboxes-" + statName} key={statName}>
+                          <label for={statName}>{labelMaker(statName)}</label>
+                          <input type="checkbox" name={statName} value={statName} onClick={this.toggleCheckbox} checked={this.state.activeStats[statName]}/>
+                        </div>
+                      )
+                    })
+                  }
+            </div>
+              )
+            }
             <div className="stat-controller-god-text">
                 <h4>{this.state.godName} excels in the following categories:</h4>
                 {
