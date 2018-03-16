@@ -8,10 +8,33 @@
     flex-direction: column;
   }
 
-  .btn-toggle {
+  .btn-remove {
+    margin: auto 5px;
+    align-self: center;
+    width: 32px;
+    background: #EE6655
+  }
+
+  .btn-chart {
     width: 30%;
     font-size: 16px;
     padding: 5px;
     margin: 10px auto;
+  }
+
+  .stat-controller-god-list {
+    margin: auto;
+  }
+
+  .god-selector-current {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    h4, button {
+      font-size: 16px;
+      margin: 2px;
+    }
   }
 }

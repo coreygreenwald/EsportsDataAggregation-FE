@@ -29,56 +29,99 @@ function initActiveStats(statBase, statsToRemove, statsToStart){
   return initialStats;
 }
 
+function randomColor(){
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 class GodChart extends Component {
 
   constructor(props){
     super(props);
     this.state = {
       godName: 'Freya',
-      stats: [],
+      godsData: {},
       averageStats: {},
       showStats: false,
-      activeStats: initActiveStats(statNames, ['kda'], ['kills', 'assists', 'deaths', 'wins', 'goldEarned', 'damage', 'wardsPlaced'])
+      activeStats: initActiveStats(statNames, ['kda'], ['kills', 'assists', 'deaths', 'wins', 'goldEarned', 'damage', 'wardsPlaced']),
+      radars: [],
+      convertedData: []
     }
     this.grabGodData = this.grabGodData.bind(this);
     this.changeGod = this.changeGod.bind(this);
-    this.convertAndSetData = this.convertAndSetData.bind(this);
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
+
+    this.addGod = this.addGod.bind(this);
+    this.deleteGod = this.deleteGod.bind(this);
+    this.convertData = this.convertData.bind(this);
+    this.radarMaker = this.radarMaker.bind(this);
   }
 
   componentDidMount(){
     this.props.getGods()
-    this.updateGraph()
+    axios.get('/api/stats/all?perGame=true')
+      .then(res => res.data)
+      .then(averageStats => {
+        console.log('is this hit?');
+        this.setState({averageStats});
+        this.addGod('Freya', averageStats);
+      })
   }
 
   changeGod(godName){
     let newState = Object.assign({}, this.state, {godName});
     this.setState(newState);
-    this.updateGraph(godName);
+    // this.updateGraph(godName);
   }
 
-  updateGraph(godName){
-    Promise.all([axios.get('/api/stats/all?perGame=true').then(res => res.data), this.grabGodData(godName || this.state.godName).then(res => res.data)])
-    .then(data => {
-      delete data[1].stats[0].name;
-      delete data[1].stats[0].totalTime;
-      this.convertAndSetData(data[1].stats[0], data[0]);
-    })
+  addGod(godName, averageStats){
+    if(!this.state.godsData[godName]){
+      let newGodsData = Object.assign({}, this.state.godsData);
+      this.grabGodData(godName)
+        .then(data => {
+          delete data.stats[0].name;
+          delete data.stats[0].totalTime;
+          newGodsData[godName] = data.stats[0];
+          newGodsData[godName].color = randomColor();
+          this.convertData(newGodsData, averageStats);
+          this.radarMaker(newGodsData);
+          this.setState({godsData: newGodsData});
+        })
+    }
   }
+
+  deleteGod(godName){
+    let newGodsData = Object.assign({}, this.state.godsData);
+    delete newGodsData[godName];
+    this.setState({godsData: newGodsData});
+  }
+
+  // updateGraph(godName){
+  //   Promise.all([axios.get('/api/stats/all?perGame=true').then(res => res.data), this.grabGodData(godName || this.state.godName)])
+  //   .then(data => {
+  //     delete data[1].stats[0].name;
+  //     delete data[1].stats[0].totalTime;
+  //     this.convertAndSetData(data[1].stats[0], data[0]);
+  //   })
+  // }
 
   grabGodData(godName){
-    return axios.get(`/api/gods/${godName}/stats?perGame=true`)
+    return axios.get(`/api/gods/${godName}/stats?perGame=true`).then(res => res.data)
   }
 
-  convertAndSetData(godData, averagedStats){
-    let convertedData = [];
-    for(let stat in godData){
-      if(this.state.activeStats[stat]){
-        convertedData.push({statName: labelMaker(stat), a: percentage(godData[stat], averagedStats[stat])});
-      }
-    }
-    this.setState({stats: convertedData});
-  }
+  // convertAndSetData(godData, averagedStats){
+  //   let convertedData = [];
+  //   for(let stat in godData){
+  //     if(this.state.activeStats[stat]){
+  //       convertedData.push({statName: labelMaker(stat), a: percentage(godData[stat], averagedStats[stat])});
+  //     }
+  //   }
+  //   this.setState({stats: convertedData});
+  // }
 
   toggleCheckbox(event){
     let newActiveStats = Object.assign({}, this.state.activeStats);
@@ -87,32 +130,88 @@ class GodChart extends Component {
     this.updateGraph();
   }
 
+  convertData(godsData, averageStats = this.state.averageStats){
+    let convertedData = [];
+    // const godsData = this.state.godsData;
+    for(let stat in averageStats){
+      if(averageStats[stat]){
+        let statObj = {statName: labelMaker(stat)}
+        for(let god in godsData){
+          let godData = godsData[god];
+          statObj[god.toLowerCase()] = percentage(godData[stat], averageStats[stat]) || 0;
+        }
+        convertedData.push(statObj);
+      }
+    }
+    this.setState({convertedData: convertedData});
+  }
+
+  radarMaker(godsData){
+    let letterIndex = 0;
+    let arrOfRadars = [];
+    // let arrOfRadars = this.state.radars.slice();
+    for(let godName in godsData){
+      arrOfRadars.push(
+        <Radar name={godName} dataKey={godName.toLowerCase()} stroke={godsData[godName].color} fill={godsData[godName].color} fillOpacity={0.6} />
+      )
+    }
+    this.setState({radars: arrOfRadars});
+  }
+
   render(){
     function labelMaker(label = ''){
       return label.replace(/[A-Z]/g, (letter) => ` ${letter}`).toUpperCase();
     }
     return (
-      this.state.stats.length && this.props.gods.godNames ? (
+      this.props.gods.godNames
+      && this.state.radars.length
+      && this.state.convertedData.length
+      && Object.keys(this.state.godsData).length
+      && Object.keys(this.state.averageStats).length ? (
 
         <div className="container-row">
-          <RadarChart outerRadius={200} width={800} height={520} data={this.state.stats}>
+          <RadarChart outerRadius={200} width={800} height={520} data={this.state.convertedData}>
             <PolarGrid />
             <PolarAngleAxis dataKey="statName" />
             <PolarRadiusAxis angle={30} domain={[0, 100]}/>
-            <Radar name="Agni" dataKey="a" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+            {
+              this.state.radars
+            }
+            {/* <Radar name="Freya" dataKey="freya" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} /> */}
             {/* <Legend /> */}
           </RadarChart>
           <div className="stat-controller">
             <h4> All stats are shown as a percentage of the highest God in each category.</h4>
-            <div className="stat-controller-god-selector">
+            {/* <div className="stat-controller-god-selector">
               <label htmlFor="god-selector">Select a God</label>
               <select value={this.state.godName} name="god-selector" onChange={(event) => this.changeGod(event.target.value)}>
                 {
                   this.props.gods.godNames.map(god => (<option value={god} key={god}>{labelMaker(god)}</option>))
                 }
               </select>
+            </div> */}
+            <div className="stat-controller-god-selector">
+              {/* <label htmlFor="god-selector">Add a God</label> */}
+              <select value={this.state.godName} name="god-selector" onChange={(event) => this.setState({godName: event.target.value})}>
+                {
+                  this.props.gods.godNames.map(god => (<option value={god} key={god}>{labelMaker(god)}</option>))
+                }
+              </select>
+              <button className="btn btn-chart" onClick={() => {this.addGod(this.state.godName)}}>Add a God</button>
             </div>
-            <button className="btn btn-toggle" onClick={() => this.setState({showStats: !this.state.showStats}).bind(this)}>{this.state.showStats ? 'Collapse' : 'Expand'} Stats</button>
+            <div className="stat-controller-god-list">
+              {
+                 Object.keys(this.state.godsData).map(godName => {
+                   return (
+                    <div className="god-selector-current">
+                      <h4>{godName}</h4>
+                      <button className="btn btn-chart btn-remove" onClick={() => this.deleteGod(godName)}>x</button>
+                    </div>
+                   )
+                })
+              }
+            </div>
+            <button className="btn btn-chart" onClick={() => this.setState({showStats: !this.state.showStats})}>{this.state.showStats ? 'Collapse' : 'Expand'} Stats</button>
             {
               this.state.showStats &&
               (
@@ -130,14 +229,14 @@ class GodChart extends Component {
             </div>
               )
             }
-            <div className="stat-controller-god-text">
+            {/* <div className="stat-controller-god-text">
                 <h4>{this.state.godName} excels in the following categories:</h4>
                 {
                    this.state.stats
                     .filter(stat => stat.a > 85)
                     .map(stat => <p>{stat.statName} at the {stat.a} percentile</p>)
                 }
-            </div>
+            </div> */}
           </div>
       </div>
 
