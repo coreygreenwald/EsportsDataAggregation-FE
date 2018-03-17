@@ -58,7 +58,7 @@ class GodChart extends Component {
     this.addGod = this.addGod.bind(this);
     this.deleteGod = this.deleteGod.bind(this);
     this.convertData = this.convertData.bind(this);
-    this.radarMaker = this.radarMaker.bind(this);
+    this.addRadar = this.addRadar.bind(this);
   }
 
   componentDidMount(){
@@ -88,7 +88,7 @@ class GodChart extends Component {
           newGodsData[godName] = data.stats[0];
           newGodsData[godName].color = randomColor();
           this.convertData(newGodsData, averageStats);
-          this.radarMaker(newGodsData);
+          this.addRadar(godName, newGodsData);
           this.setState({godsData: newGodsData});
         })
     }
@@ -100,41 +100,22 @@ class GodChart extends Component {
     this.setState({godsData: newGodsData});
   }
 
-  // updateGraph(godName){
-  //   Promise.all([axios.get('/api/stats/all?perGame=true').then(res => res.data), this.grabGodData(godName || this.state.godName)])
-  //   .then(data => {
-  //     delete data[1].stats[0].name;
-  //     delete data[1].stats[0].totalTime;
-  //     this.convertAndSetData(data[1].stats[0], data[0]);
-  //   })
-  // }
-
   grabGodData(godName){
     return axios.get(`/api/gods/${godName}/stats?perGame=true`).then(res => res.data)
   }
-
-  // convertAndSetData(godData, averagedStats){
-  //   let convertedData = [];
-  //   for(let stat in godData){
-  //     if(this.state.activeStats[stat]){
-  //       convertedData.push({statName: labelMaker(stat), a: percentage(godData[stat], averagedStats[stat])});
-  //     }
-  //   }
-  //   this.setState({stats: convertedData});
-  // }
 
   toggleCheckbox(event){
     let newActiveStats = Object.assign({}, this.state.activeStats);
     newActiveStats[event.target.value] = !newActiveStats[event.target.value];
     this.setState({activeStats: newActiveStats});
-    this.updateGraph();
+    this.convertData(this.state.godsData, this.state.averageStats, newActiveStats);
   }
 
-  convertData(godsData, averageStats = this.state.averageStats){
+  convertData(godsData, averageStats = this.state.averageStats, activeStats = this.state.activeStats){
     let convertedData = [];
     // const godsData = this.state.godsData;
     for(let stat in averageStats){
-      if(averageStats[stat]){
+      if(activeStats[stat]){
         let statObj = {statName: labelMaker(stat)}
         for(let god in godsData){
           let godData = godsData[god];
@@ -146,15 +127,14 @@ class GodChart extends Component {
     this.setState({convertedData: convertedData});
   }
 
-  radarMaker(godsData){
+  addRadar(godName, godsData){
     let letterIndex = 0;
-    let arrOfRadars = [];
-    // let arrOfRadars = this.state.radars.slice();
-    for(let godName in godsData){
-      arrOfRadars.push(
-        <Radar name={godName} dataKey={godName.toLowerCase()} stroke={godsData[godName].color} fill={godsData[godName].color} fillOpacity={0.6} />
-      )
-    }
+    // let arrOfRadars = [];
+    let arrOfRadars = this.state.radars
+    // for(let godName in godsData){
+    arrOfRadars.push(
+      <Radar name={godName} dataKey={godName.toLowerCase()} stroke={godsData[godName].color} fill={godsData[godName].color} fillOpacity={0.6} />
+    )
     this.setState({radars: arrOfRadars});
   }
 
@@ -205,6 +185,7 @@ class GodChart extends Component {
                    return (
                     <div className="god-selector-current">
                       <h4>{godName}</h4>
+                      <div className="legend" style={{backgroundColor: this.state.godsData[godName].color}}></div>
                       <button className="btn btn-chart btn-remove" onClick={() => this.deleteGod(godName)}>x</button>
                     </div>
                    )
