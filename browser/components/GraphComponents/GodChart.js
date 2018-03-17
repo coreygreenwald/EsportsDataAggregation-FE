@@ -59,6 +59,7 @@ class GodChart extends Component {
     this.deleteGod = this.deleteGod.bind(this);
     this.convertData = this.convertData.bind(this);
     this.addRadar = this.addRadar.bind(this);
+    this.deleteRadar = this.deleteRadar.bind(this);
   }
 
   componentDidMount(){
@@ -66,7 +67,6 @@ class GodChart extends Component {
     axios.get('/api/stats/all?perGame=true')
       .then(res => res.data)
       .then(averageStats => {
-        console.log('is this hit?');
         this.setState({averageStats});
         this.addGod('Freya', averageStats);
       })
@@ -75,7 +75,6 @@ class GodChart extends Component {
   changeGod(godName){
     let newState = Object.assign({}, this.state, {godName});
     this.setState(newState);
-    // this.updateGraph(godName);
   }
 
   addGod(godName, averageStats){
@@ -97,6 +96,8 @@ class GodChart extends Component {
   deleteGod(godName){
     let newGodsData = Object.assign({}, this.state.godsData);
     delete newGodsData[godName];
+    this.convertData(newGodsData, this.state.averageStats);
+    this.deleteRadar(godName, newGodsData);
     this.setState({godsData: newGodsData});
   }
 
@@ -113,7 +114,6 @@ class GodChart extends Component {
 
   convertData(godsData, averageStats = this.state.averageStats, activeStats = this.state.activeStats){
     let convertedData = [];
-    // const godsData = this.state.godsData;
     for(let stat in averageStats){
       if(activeStats[stat]){
         let statObj = {statName: labelMaker(stat)}
@@ -129,12 +129,15 @@ class GodChart extends Component {
 
   addRadar(godName, godsData){
     let letterIndex = 0;
-    // let arrOfRadars = [];
     let arrOfRadars = this.state.radars
-    // for(let godName in godsData){
     arrOfRadars.push(
       <Radar name={godName} dataKey={godName.toLowerCase()} stroke={godsData[godName].color} fill={godsData[godName].color} fillOpacity={0.6} />
     )
+    this.setState({radars: arrOfRadars});
+  }
+
+  deleteRadar(godName, godsData){
+    let arrOfRadars = this.state.radars.filter(radar => radar.props.name !== godName);
     this.setState({radars: arrOfRadars});
   }
 
@@ -144,9 +147,8 @@ class GodChart extends Component {
     }
     return (
       this.props.gods.godNames
-      && this.state.radars.length
       && this.state.convertedData.length
-      && Object.keys(this.state.godsData).length
+      // && Object.keys(this.state.godsData).length
       && Object.keys(this.state.averageStats).length ? (
 
         <div className="container-row">
@@ -155,10 +157,10 @@ class GodChart extends Component {
             <PolarAngleAxis dataKey="statName" />
             <PolarRadiusAxis angle={30} domain={[0, 100]}/>
             {
-              this.state.radars
+              this.state.radars.length ?
+              this.state.radars :
+              null
             }
-            {/* <Radar name="Freya" dataKey="freya" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} /> */}
-            {/* <Legend /> */}
           </RadarChart>
           <div className="stat-controller">
             <h4> All stats are shown as a percentage of the highest God in each category.</h4>
