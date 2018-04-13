@@ -152,7 +152,7 @@ class GodChart extends Component {
       && Object.keys(this.state.averageStats).length ? (
 
         <div className="container-row">
-          <RadarChart outerRadius={200} width={800} height={520} data={this.state.convertedData}>
+          <RadarChart outerRadius={180} width={750} height={475} data={this.state.convertedData}>
             <PolarGrid />
             <PolarAngleAxis dataKey="statName" />
             <PolarRadiusAxis angle={30} domain={[0, 100]}/>
@@ -203,7 +203,7 @@ class GodChart extends Component {
                     statNames.map((statName, idx) => {
                       return (
                         <div className={"stat-checkboxes-" + statName} key={statName}>
-                          <label for={statName}>{labelMaker(statName)}</label>
+                          <label for={statName}>{labelMaker(statName).toLowerCase()}</label>
                           <input type="checkbox" name={statName} value={statName} onClick={this.toggleCheckbox} checked={this.state.activeStats[statName]}/>
                         </div>
                       )
@@ -212,19 +212,19 @@ class GodChart extends Component {
             </div>
               )
             }
-            {/* <div className="stat-controller-god-text">
+            {/* {
+              <div className="stat-controller-god-text">
                 <h4>{this.state.godName} excels in the following categories:</h4>
                 {
-                   this.state.stats
+                    this.state.godsData
                     .filter(stat => stat.a > 85)
                     .map(stat => <p>{stat.statName} at the {stat.a} percentile</p>)
                 }
-            </div> */}
+              </div>
+            } */}
+
           </div>
       </div>
-
-
-
       ) :
       (<h1>Loading...</h1>)
     )
