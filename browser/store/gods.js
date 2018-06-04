@@ -3,6 +3,7 @@ import axios from 'axios'
 /**
  * ACTION TYPES
  */
+
 const GET_GODS = 'GET_GODS';
 
 /**
