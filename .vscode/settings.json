@@ -19,6 +19,6 @@
           "editorWarning.foreground": "#ec0"
       },
       "workbench.colorTheme": "Monokai",
-      "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
       "git.ignoreLegacyWarning": true
   }
